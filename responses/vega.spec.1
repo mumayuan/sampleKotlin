@@ -1,0 +1,52 @@
+{
+	"$schema": "https://vega.github.io/schema/vega/v3.json",
+	"width": 200,
+	"height": 200,
+
+	"data": [{
+		"url": "http://127.0.0.1:8999/api/data",
+		"name": "table",
+		"format": {"property": "hits.hits"}
+	}],
+"scales": [
+    {
+      "name": "xscale",
+      "type": "band",
+      "domain": {"data": "table", "field": "_source.created"},
+      "range": "width",
+      "padding": 0.05,
+      "round": true
+    },
+    {
+      "name": "yscale",
+      "domain": {"data": "table", "field": "_source.elapsedTime"},
+      "nice": true,
+      "range": "height"
+    }
+  ],
+       "axes": [
+    { "orient": "bottom", "scale": "xscale" },
+    { "orient": "left", "scale": "yscale" }
+  ],
+
+	"marks": [
+	{
+      "type": "rect",
+      "from": {"data":"table"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "_source.created"},
+          "width": {"scale": "xscale", "band": 1},
+          "y": {"scale": "yscale", "field": "_source.elapsedTime"},
+          "y2": {"scale": "yscale", "value": 0}
+        },
+        "update": {
+          "fill": {"value": "steelblue"}
+        },
+        "hover": {
+          "fill": {"value": "red"}
+        }
+      }
+    }
+	]
+}
