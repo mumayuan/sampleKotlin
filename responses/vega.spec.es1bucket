@@ -1,0 +1,86 @@
+{
+	"$schema": "https://vega.github.io/schema/vega/v3.json",
+	"width": 800,
+	"height": 600,
+
+	"data": [{
+		"url": "http://127.0.0.1:8999/api/data",
+		"name": "table",
+		"format": {"property": "aggregations.2.buckets"}
+	}],
+"scales": [
+    {
+      "name": "xscale",
+      "type": "point",
+      "domain": {"data": "table", "field": "key_as_string"},
+      "range": "width"
+    },
+    {
+      "name": "yscale",
+      "domain": {"data": "table", "field": "1.value"},
+      "nice": true,
+      "range": "height"
+    }
+  ],
+      "axes": [
+        {
+          "orient": "bottom",
+          "scale": "xscale",
+          "title": "X-Axis",
+          "encode": {
+            "ticks": {
+              "update": {
+                "stroke": {"value": "steelblue"}
+              }
+            },
+            "labels": {
+              "interactive": true,
+              "update": {
+
+                "fill": {"value": "steelblue"},
+                "angle": {"value": 50},
+                "fontSize": {"value": 14},
+                "align": {"value": "left"},
+                "baseline": {"value": "middle"},
+                "dx": {"value": 3}
+              },
+              "hover": {
+                "fill": {"value": "firebrick"}
+              }
+            },
+            "title": {
+              "update": {
+                "fontSize": {"value": 16}
+              }
+            },
+            "domain": {
+              "update": {
+                "stroke": {"value": "#333"},
+                "strokeWidth": {"value": 1.5}
+              }
+            }
+          }
+        },
+         { "orient": "left", "scale": "yscale" }
+      ],
+
+	"marks": [
+	{
+      "type": "line",
+      "from": {"data":"table"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "key_as_string"},
+          "y": {"scale": "yscale", "field": "1.value"}
+        },
+        "update": {
+		
+          "fillOpacity": {"value": "steelblue"}
+        },
+        "hover": {
+          "fillOpacity": {"value": "red"}
+        }
+      }
+    }
+	]
+}

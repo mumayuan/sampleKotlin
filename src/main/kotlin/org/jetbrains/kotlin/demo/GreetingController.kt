@@ -80,8 +80,9 @@ class GreetingController {
     @GetMapping("/api/data")
     fun getData() : String{
         val file = File("responses"+File.separator+"data")
-        var content:String = file.readText()
-        logger.error("--Get the data -"+content)
+
+        var content:String = Convert.convert()
+
 
         return (content)
     }
