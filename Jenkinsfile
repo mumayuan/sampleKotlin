@@ -18,7 +18,12 @@ pipeline {
           HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
         }
         steps {
+          echo '-- outside of container'  
+          sh 'hostname; whoami'
+            
           container('gradle') {
+              echo '-- inside of container'
+            sh 'hostname; whoami'  
             // TODO 
             //sh "mvn versions:set -DnewVersion=$PREVIEW_VERSION"
             sh "gradle clean build"
