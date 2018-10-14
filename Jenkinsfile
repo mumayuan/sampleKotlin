@@ -45,7 +45,11 @@ pipeline {
           branch 'master'
         }
         steps {
+                          echo '-- outside of container'
+            sh 'hostname; whoami'  
           container('gradle') {
+                            echo '-- inside of container'
+            sh 'hostname; whoami'  
             // ensure we're not on a detached head
             sh "git checkout master"
             sh "git config --global credential.helper store"
