@@ -45,11 +45,11 @@ pipeline {
           branch 'master'
         }
         steps {
-                          echo '-- outside of container'
-            sh 'hostname; whoami'  
+                          echo '-Build Release- outside of container'
+            sh 'hostname; whoami;pwd'  
           container('gradle') {
-                            echo '-- inside of container'
-            sh 'hostname; whoami'  
+                            echo '-Build Release- inside of container'
+            sh 'hostname; whoami;pwd'  
             // ensure we're not on a detached head
             sh "git checkout master"
             sh "git config --global credential.helper store"
@@ -79,8 +79,12 @@ pipeline {
           branch 'master'
         }
         steps {
+              echo '-Promote to Environments- outside of container'
+            sh 'hostname; whoami;pwd'  
           dir ('./charts/samplekotlin') {
             container('gradle') {
+                  echo '-Promote to Environments- in side of container'
+            sh 'hostname; whoami;pwd'  
               sh 'jx step changelog --version v\$(cat ../../VERSION)'
 
               // release the helm chart
